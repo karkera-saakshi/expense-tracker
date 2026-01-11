@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Tracker | Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #e6f4f1, #f4f7fb);
+        }
+
+        .card {
+            width: 380px;
+            background: #fff;
+            padding: 32px;
+            border-radius: 14px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f766e;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #334155;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+            margin-bottom: 16px;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #0f766e;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #0f766e;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #115e59;
+        }
+
+        .message {
+            margin-top: 16px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+
+        .success {
+            background: #ecfdf5;
+            color: #065f46;
+        }
+
+        .error {
+            background: #fef2f2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Expense Tracker</h1>
+    <div class="subtitle">Login to your account</div>
+
+    <label>Username</label>
+    <input type="text" id="username" placeholder="Enter username">
+
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter password">
+
+    <button onclick="login()">Login</button>
+
+    <div id="messageBox" class="message"></div>
+</div>
+
+<!--<script>-->
+<!--    function login() {-->
+<!--        const username = document.getElementById("username").value.trim();-->
+<!--        const password = document.getElementById("password").value.trim();-->
+
+<!--        if (!username || !password) {-->
+<!--            showMessage("All fields are required", "error");-->
+<!--            return;-->
+<!--        }-->
+
+<!--        fetch("http://localhost:8081/login", {-->
+<!--            method: "POST",-->
+<!--            headers: { "Content-Type": "application/json" },-->
+<!--            body: JSON.stringify({ username, password })-->
+<!--        })-->
+<!--        .then(res => res.text())-->
+<!--        .then(data => {-->
+<!--            if (data === "User not found" || data === "You entered the wrong password") {-->
+<!--                showMessage(data, "error");-->
+<!--            } else {-->
+<!--                showMessage("Welcome " + data + "! Redirecting...", "success");-->
+<!--                setTimeout(() => {-->
+<!--                    window.location.href = "dashboard.html?user=" + data;-->
+<!--                }, 1500);-->
+<!--            }-->
+<!--        })-->
+<!--        .catch(() => showMessage("Server error. Try again.", "error"));-->
+<!--    }-->
+
+<!--    function showMessage(text, type) {-->
+<!--        const box = document.getElementById("messageBox");-->
+<!--        box.innerText = text;-->
+<!--        box.className = "message " + type;-->
+<!--        box.style.display = "block";-->
+<!--    }-->
+<!--</script>-->
+
+<!--<script>-->
+<!--    function login() {-->
+<!--        const username = document.getElementById("username").value.trim();-->
+<!--        const password = document.getElementById("password").value.trim();-->
+
+<!--        if (!username || !password) {-->
+<!--            showMessage("All fields are required", "error");-->
+<!--            return;-->
+<!--        }-->
+
+<!--        fetch("http://localhost:8081/login", {-->
+<!--            method: "POST",-->
+<!--            headers: { "Content-Type": "application/json" },-->
+<!--            body: JSON.stringify({ username, password })-->
+<!--        })-->
+<!--        .then(res => res.text())-->
+<!--        .then(data => {-->
+<!--            if (data === "User not found" || data === "You entered the wrong password") {-->
+<!--                showMessage(data, "error");-->
+<!--            } else {-->
+<!--                showMessage("Welcome " + data + "! Redirecting...", "success");-->
+<!--                // store user ID or username in localStorage if needed-->
+<!--                localStorage.setItem("userId", data);-->
+<!--                setTimeout(() => {-->
+<!--                    window.location.href = "dashboard.html";-->
+<!--                }, 1500);-->
+<!--            }-->
+<!--        })-->
+<!--        .catch(() => showMessage("Server error. Try again.", "error"));-->
+<!--    }-->
+
+<!--    function showMessage(text, type) {-->
+<!--        const box = document.getElementById("messageBox");-->
+<!--        box.innerText = text;-->
+<!--        box.className = "message " + type;-->
+<!--        box.style.display = "block";-->
+<!--    }-->
+<!--</script>-->
+
+<script>
+    function login() {
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value.trim();
+
+        if (!username || !password) {
+            showMessage("All fields are required", "error");
+            return;
+        }
+
+        fetch("http://localhost:8081/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(res => res.text())
+        .then(data => {
+            if (data === "User not found" || data === "You entered the wrong password") {
+                showMessage(data, "error");
+            } else {
+                // data = userId (string like "1")
+                localStorage.setItem("userId", Number(data));
+
+                showMessage("Login successful. Redirecting...", "success");
+
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 1200);
+            }
+        })
+        .catch(() => {
+            showMessage("Server error. Please try again later.", "error");
+        });
+    }
+
+    function showMessage(message, type) {
+        const box = document.getElementById("messageBox");
+        box.innerText = message;
+        box.className = "message " + type;
+        box.style.display = "block";
+    }
+</script>
+
+
+
+
+</body>
+</html>
