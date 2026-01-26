@@ -23,8 +23,8 @@ public class Budget {
     double monthlyBudget;
     @Column(nullable = false)
     double originalBudget;
-    @Column(nullable = false)
-    double saving;
+//    @Column(nullable = false)
+//    double saving;
     @CreationTimestamp
     @Column(nullable = false)
     LocalDateTime createdAt;

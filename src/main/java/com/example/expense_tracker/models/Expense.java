@@ -18,7 +18,10 @@ public class Expense {
     int id;
     @ManyToOne
     @JoinColumn(name = "budget_id", nullable = false)
-    private Budget budget;
+    Budget budget;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    User user;
     @Column(nullable = false)
     Double expenseAmount;
     @Column(nullable = false)
@@ -29,4 +32,6 @@ public class Expense {
     String mood;
     @CreationTimestamp
     LocalDateTime createdAt;
+    @Column
+    double totalExpense;
 }

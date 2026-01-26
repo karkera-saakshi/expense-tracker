@@ -1,293 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <title>Expense Tracker Dashboard</title>-->
-<!--    <style>-->
-<!--        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }-->
-<!--        body { margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #e6f4f1, #f4f7fb); }-->
-<!--        .dashboard { width: 90%; max-width: 1200px; background: #ffffff; padding: 32px; border-radius: 14px; box-shadow: 0 12px 30px rgba(0,0,0,0.08); }-->
-<!--        h1 { text-align: center; color: #0f766e; margin-bottom: 6px; }-->
-<!--        .budget-display { text-align: center; font-size: 24px; color: #0f766e; margin-bottom: 24px; }-->
-<!--        .buttons { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 24px; }-->
-<!--        button { padding: 12px 20px; background-color: #0f766e; color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; transition: background 0.3s ease; }-->
-<!--        button:hover { background-color: #115e59; }-->
-<!--        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); justify-content: center; align-items: center; }-->
-<!--        .modal-content { background: #fff; padding: 24px; border-radius: 12px; width: 350px; max-width: 90%; }-->
-<!--        .modal-content h2 { margin-top: 0; color: #0f766e; }-->
-<!--        .modal-content input, .modal-content select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 6px; border: 1px solid #cbd5e1; }-->
-<!--        .modal-content button { margin-top: 12px; }-->
-<!--        .message-box { margin-top: 12px; padding: 10px; border-radius: 6px; font-size: 14px; text-align: center; display: none; }-->
-<!--        .success { background-color: #ecfdf5; color: #065f46; }-->
-<!--        .error { background-color: #fef2f2; color: #991b1b; }-->
-<!--        .history-container { max-height: 300px; overflow-y: auto; margin-top: 12px; }-->
-<!--        table { width: 100%; border-collapse: collapse; }-->
-<!--        th, td { border: 1px solid #cbd5e1; padding: 8px; text-align: left; }-->
-<!--        th { background-color: #0f766e; color: #fff; }-->
-<!--    </style>-->
-<!--</head>-->
-<!--<body>-->
-<!--<div class="dashboard">-->
-<!--    <h1>Expense Tracker Dashboard</h1>-->
-<!--    <div class="budget-display" id="monthlyBudget">Monthly Budget: ₹0</div>-->
-<!--    <div class="buttons">-->
-<!--        <button onclick="openModal('budgetModal')">Set Current Monthly Budget</button>-->
-<!--        <button onclick="openModal('expenseModal')">Add Expense</button>-->
-<!--        <button onclick="viewHistory()">View History of This Month</button>-->
-<!--        <button onclick="viewMonthlySummary()">View of Every Month</button>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Set Budget Modal &ndash;&gt;-->
-<!--    <div class="modal" id="budgetModal">-->
-<!--        <div class="modal-content">-->
-<!--            <h2>Set Monthly Budget</h2>-->
-<!--            <input type="number" id="budgetInput" placeholder="Amount in ₹">-->
-<!--            <button onclick="setBudget()">OK</button>-->
-<!--            <div class="message-box" id="budgetMessage"></div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    &lt;!&ndash; Add Expense Modal &ndash;&gt;-->
-<!--    <div class="modal" id="expenseModal">-->
-<!--        <div class="modal-content">-->
-<!--            <h2>Add Expense</h2>-->
-<!--            <input type="number" id="expenseAmount" placeholder="Amount in ₹">-->
-<!--            <input type="text" id="expenseDescription" placeholder="Description">-->
-<!--            <select id="expenseCategory">-->
-<!--                <option value="food">Food</option>-->
-<!--                <option value="education">Education</option>-->
-<!--                <option value="self">Self</option>-->
-<!--                <option value="entertainment">Entertainment</option>-->
-<!--                <option value="transport">Transport</option>-->
-<!--            </select>-->
-<!--            <select id="expenseMood">-->
-<!--                <option value="happy">Happy</option>-->
-<!--                <option value="sad">Sad</option>-->
-<!--                <option value="neutral">Neutral</option>-->
-<!--                <option value="excited">Excited</option>-->
-<!--            </select>-->
-<!--            <button onclick="addExpense()">Add Expense</button>-->
-<!--            <div class="message-box" id="expenseMessage"></div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="history-container" id="historyContainer"></div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash;<script>&ndash;&gt;-->
-<!--&lt;!&ndash;    const userId = 1; // Replace with actual logged in user id&ndash;&gt;-->
-
-<!--&lt;!&ndash;    function openModal(id) {&ndash;&gt;-->
-<!--&lt;!&ndash;        document.getElementById(id).style.display = 'flex';&ndash;&gt;-->
-<!--&lt;!&ndash;    }&ndash;&gt;-->
-
-<!--&lt;!&ndash;    function closeModal(id) {&ndash;&gt;-->
-<!--&lt;!&ndash;        document.getElementById(id).style.display = 'none';&ndash;&gt;-->
-<!--&lt;!&ndash;    }&ndash;&gt;-->
-
-<!--&lt;!&ndash;    function setBudget() {&ndash;&gt;-->
-<!--&lt;!&ndash;        const amount = document.getElementById('budgetInput').value;&ndash;&gt;-->
-<!--&lt;!&ndash;        fetch('http://localhost:8081/setBudget', {&ndash;&gt;-->
-<!--&lt;!&ndash;            method: 'POST',&ndash;&gt;-->
-<!--&lt;!&ndash;            headers: { 'Content-Type': 'application/json' },&ndash;&gt;-->
-<!--&lt;!&ndash;            body: JSON.stringify({ userId: userId, monthlyBudget: parseFloat(amount) })&ndash;&gt;-->
-<!--&lt;!&ndash;        })&ndash;&gt;-->
-<!--&lt;!&ndash;        .then(res => res.text())&ndash;&gt;-->
-<!--&lt;!&ndash;        .then(msg => {&ndash;&gt;-->
-<!--&lt;!&ndash;            document.getElementById('budgetMessage').innerText = msg;&ndash;&gt;-->
-<!--&lt;!&ndash;            document.getElementById('budgetMessage').className = 'message-box success';&ndash;&gt;-->
-<!--&lt;!&ndash;            document.getElementById('monthlyBudget').innerText = 'Monthly Budget: ₹' + amount;&ndash;&gt;-->
-<!--&lt;!&ndash;            setTimeout(() => closeModal('budgetModal'), 1500);&ndash;&gt;-->
-<!--&lt;!&ndash;        })&ndash;&gt;-->
-<!--&lt;!&ndash;        .catch(err => console.error(err));&ndash;&gt;-->
-<!--&lt;!&ndash;    }&ndash;&gt;-->
-
-<!--&lt;!&ndash;    function addExpense() {&ndash;&gt;-->
-<!--&lt;!&ndash;        const amount = document.getElementById('expenseAmount').value;&ndash;&gt;-->
-<!--&lt;!&ndash;        const description = document.getElementById('expenseDescription').value;&ndash;&gt;-->
-<!--&lt;!&ndash;        const category = document.getElementById('expenseCategory').value;&ndash;&gt;-->
-<!--&lt;!&ndash;        const mood = document.getElementById('expenseMood').value;&ndash;&gt;-->
-
-<!--&lt;!&ndash;        fetch('http://localhost:8081/expense', {&ndash;&gt;-->
-<!--&lt;!&ndash;            method: 'POST',&ndash;&gt;-->
-<!--&lt;!&ndash;            headers: { 'Content-Type': 'application/json' },&ndash;&gt;-->
-<!--&lt;!&ndash;            body: JSON.stringify({ id: userId, expenseAmount: parseFloat(amount), description, category, mood })&ndash;&gt;-->
-<!--&lt;!&ndash;        })&ndash;&gt;-->
-<!--&lt;!&ndash;        .then(res => res.text())&ndash;&gt;-->
-<!--&lt;!&ndash;        .then(msg => {&ndash;&gt;-->
-<!--&lt;!&ndash;            document.getElementById('expenseMessage').innerText = msg;&ndash;&gt;-->
-<!--&lt;!&ndash;            document.getElementById('expenseMessage').className = 'message-box success';&ndash;&gt;-->
-<!--&lt;!&ndash;            setTimeout(() => closeModal('expenseModal'), 1500);&ndash;&gt;-->
-<!--&lt;!&ndash;            fetchBudget();&ndash;&gt;-->
-<!--&lt;!&ndash;        })&ndash;&gt;-->
-<!--&lt;!&ndash;        .catch(err => console.error(err));&ndash;&gt;-->
-<!--&lt;!&ndash;    }&ndash;&gt;-->
-
-<!--&lt;!&ndash;    function viewHistory() {&ndash;&gt;-->
-<!--&lt;!&ndash;        fetch(`http://localhost:8081/histories/${userId}`)&ndash;&gt;-->
-<!--&lt;!&ndash;        .then(res => res.json())&ndash;&gt;-->
-<!--&lt;!&ndash;        .then(data => {&ndash;&gt;-->
-<!--&lt;!&ndash;            let html = '<table><tr><th>Amount</th><th>Description</th><th>Category</th><th>Mood</th></tr>';&ndash;&gt;-->
-<!--&lt;!&ndash;            data.forEach(exp => {&ndash;&gt;-->
-<!--&lt;!&ndash;                html += `<tr><td>₹${exp.expenseAmount}</td><td>${exp.description}</td><td>${exp.category}</td><td>${exp.mood}</td></tr>`;&ndash;&gt;-->
-<!--&lt;!&ndash;            });&ndash;&gt;-->
-<!--&lt;!&ndash;            html += '</table>';&ndash;&gt;-->
-<!--&lt;!&ndash;            document.getElementById('historyContainer').innerHTML = html;&ndash;&gt;-->
-<!--&lt;!&ndash;        })&ndash;&gt;-->
-<!--&lt;!&ndash;        .catch(err => console.error(err));&ndash;&gt;-->
-<!--&lt;!&ndash;    }&ndash;&gt;-->
-
-<!--&lt;!&ndash;    function viewMonthlySummary() {&ndash;&gt;-->
-<!--&lt;!&ndash;        fetch(`http://localhost:8081/monthly-summary/${userId}`)&ndash;&gt;-->
-<!--&lt;!&ndash;        .then(res => res.json())&ndash;&gt;-->
-<!--&lt;!&ndash;        .then(data => {&ndash;&gt;-->
-<!--&lt;!&ndash;            let html = '<table><tr><th>Month</th><th>Total Expenses</th></tr>';&ndash;&gt;-->
-<!--&lt;!&ndash;            data.forEach(m => {&ndash;&gt;-->
-<!--&lt;!&ndash;                html += `<tr><td>${m.month}</td><td>₹${m.total}</td></tr>`;&ndash;&gt;-->
-<!--&lt;!&ndash;            });&ndash;&gt;-->
-<!--&lt;!&ndash;            html += '</table>';&ndash;&gt;-->
-<!--&lt;!&ndash;            document.getElementById('historyContainer').innerHTML = html;&ndash;&gt;-->
-<!--&lt;!&ndash;        })&ndash;&gt;-->
-<!--&lt;!&ndash;        .catch(err => console.error(err));&ndash;&gt;-->
-<!--&lt;!&ndash;    }&ndash;&gt;-->
-
-<!--&lt;!&ndash;    function fetchBudget() {&ndash;&gt;-->
-<!--&lt;!&ndash;        fetch(`http://localhost:8081/get-details/${userId}`)&ndash;&gt;-->
-<!--&lt;!&ndash;        .then(res => res.json())&ndash;&gt;-->
-<!--&lt;!&ndash;        .then(data => {&ndash;&gt;-->
-<!--&lt;!&ndash;            document.getElementById('monthlyBudget').innerText = 'Monthly Budget: ₹' + data.newmonthlyBudget;&ndash;&gt;-->
-<!--&lt;!&ndash;        })&ndash;&gt;-->
-<!--&lt;!&ndash;        .catch(err => console.error(err));&ndash;&gt;-->
-<!--&lt;!&ndash;    }&ndash;&gt;-->
-
-<!--&lt;!&ndash;    // Initial load&ndash;&gt;-->
-<!--&lt;!&ndash;    fetchBudget();&ndash;&gt;-->
-<!--&lt;!&ndash;</script>&ndash;&gt;-->
-
-<!--<script>-->
-<!--    let userId = null;-->
-
-<!--    // 🔐 Get logged-in username-->
-<!--    const username = localStorage.getItem("username");-->
-
-<!--    if (!username) {-->
-<!--        window.location.href = "login.html";-->
-<!--    }-->
-
-<!--    // 🔁 Fetch userId using username-->
-<!--    fetch(`http://localhost:8081/user/id/${username}`)-->
-<!--    .then(res => res.json())-->
-<!--    .then(id => {-->
-<!--        userId = id;-->
-<!--        fetchBudget(); // only after userId is known-->
-<!--    })-->
-<!--    .catch(() => {-->
-<!--        alert("Session error. Please login again.");-->
-<!--        window.location.href = "login.html";-->
-<!--    });-->
-
-<!--    function openModal(id) {-->
-<!--        document.getElementById(id).style.display = 'flex';-->
-<!--    }-->
-
-<!--    function closeModal(id) {-->
-<!--        document.getElementById(id).style.display = 'none';-->
-<!--    }-->
-
-<!--    function setBudget() {-->
-<!--        const amount = document.getElementById('budgetInput').value;-->
-
-<!--        fetch('http://localhost:8081/setBudget', {-->
-<!--            method: 'POST',-->
-<!--            headers: { 'Content-Type': 'application/json' },-->
-<!--            body: JSON.stringify({-->
-<!--                userId: userId,-->
-<!--                monthlyBudget: parseFloat(amount)-->
-<!--            })-->
-<!--        })-->
-<!--        .then(res => res.text())-->
-<!--        .then(msg => {-->
-<!--            document.getElementById('budgetMessage').innerText = msg;-->
-<!--            document.getElementById('budgetMessage').className = 'message-box success';-->
-<!--            document.getElementById('monthlyBudget').innerText = 'Monthly Budget: ₹' + amount;-->
-<!--            setTimeout(() => closeModal('budgetModal'), 1500);-->
-<!--        });-->
-<!--    }-->
-
-<!--    function addExpense() {-->
-<!--        const amount = document.getElementById('expenseAmount').value;-->
-<!--        const description = document.getElementById('expenseDescription').value;-->
-<!--        const category = document.getElementById('expenseCategory').value;-->
-<!--        const mood = document.getElementById('expenseMood').value;-->
-
-<!--        fetch('http://localhost:8081/expense', {-->
-<!--            method: 'POST',-->
-<!--            headers: { 'Content-Type': 'application/json' },-->
-<!--            body: JSON.stringify({-->
-<!--                id: userId,-->
-<!--                expenseAmount: parseFloat(amount),-->
-<!--                description,-->
-<!--                category,-->
-<!--                mood-->
-<!--            })-->
-<!--        })-->
-<!--        .then(res => res.text())-->
-<!--        .then(msg => {-->
-<!--            document.getElementById('expenseMessage').innerText = msg;-->
-<!--            document.getElementById('expenseMessage').className = 'message-box success';-->
-<!--            setTimeout(() => closeModal('expenseModal'), 1500);-->
-<!--            fetchBudget();-->
-<!--        });-->
-<!--    }-->
-
-<!--    function viewHistory() {-->
-<!--        fetch(`http://localhost:8081/histories/${userId}`)-->
-<!--        .then(res => res.json())-->
-<!--        .then(data => {-->
-<!--            let html = `<table>-->
-<!--                <tr><th>Amount</th><th>Description</th><th>Category</th><th>Mood</th></tr>`;-->
-<!--            data.forEach(e => {-->
-<!--                html += `<tr>-->
-<!--                    <td>₹${e.expenseAmount}</td>-->
-<!--                    <td>${e.description}</td>-->
-<!--                    <td>${e.category}</td>-->
-<!--                    <td>${e.mood}</td>-->
-<!--                </tr>`;-->
-<!--            });-->
-<!--            html += '</table>';-->
-<!--            document.getElementById('historyContainer').innerHTML = html;-->
-<!--        });-->
-<!--    }-->
-
-<!--    function viewMonthlySummary() {-->
-<!--        fetch(`http://localhost:8081/monthly-summary/${userId}`)-->
-<!--        .then(res => res.json())-->
-<!--        .then(data => {-->
-<!--            let html = `<table>-->
-<!--                <tr><th>Month</th><th>Total Expenses</th></tr>`;-->
-<!--            data.forEach(m => {-->
-<!--                html += `<tr><td>${m.month}</td><td>₹${m.total}</td></tr>`;-->
-<!--            });-->
-<!--            html += '</table>';-->
-<!--            document.getElementById('historyContainer').innerHTML = html;-->
-<!--        });-->
-<!--    }-->
-
-<!--    function fetchBudget() {-->
-<!--        fetch(`http://localhost:8081/get-details/${userId}`)-->
-<!--        .then(res => res.json())-->
-<!--        .then(data => {-->
-<!--            document.getElementById('monthlyBudget').innerText =-->
-<!--                'Monthly Budget: ₹' + data.newmonthlyBudget;-->
-<!--        });-->
-<!--    }-->
-<!--</script>-->
-
-<!--</body>-->
-<!--</html>-->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -504,12 +214,21 @@
         <div>Current Monthly Budget</div>
     </div>
 
+<!--    <div class="actions">-->
+<!--        <button onclick="openModal('budgetModal')">Set Current Monthly Budget</button>-->
+<!--        <button onclick="openModal('expenseModal')">Add Expense</button>-->
+<!--        <button onclick="viewHistory()">View History of This Month</button>-->
+<!--        <button onclick="viewMonthly()">View History of Every Month</button>-->
+<!--    </div>-->
+
     <div class="actions">
         <button onclick="openModal('budgetModal')">Set Current Monthly Budget</button>
         <button onclick="openModal('expenseModal')">Add Expense</button>
         <button onclick="viewHistory()">View History of This Month</button>
         <button onclick="viewMonthly()">View History of Every Month</button>
+        <button onclick="viewSavings()">View Savings</button>
     </div>
+
 
     <div id="dataArea">Select an option to view data.</div>
 </div>
@@ -749,6 +468,39 @@ function deleteExpense(expenseId) {
                 document.getElementById("dataArea").innerHTML = html;
             });
     }
+
+function viewSavings() {
+    fetch(`http://localhost:8081/saving/${id}`)
+        .then(res => res.json())
+        .then(data => {
+
+            const monthNames = [
+                "January","February","March","April","May","June",
+                "July","August","September","October","November","December"
+            ];
+
+            let html = `
+                <table>
+                    <tr>
+                        <th>Month</th>
+                        <th>Year</th>
+                        <th>Saved Amount</th>
+                    </tr>
+                    <tr>
+                        <td>${monthNames[data.month - 1]}</td>
+                        <td>${data.year}</td>
+                        <td>₹ ${data.saving}</td>
+                    </tr>
+                </table>
+            `;
+
+            document.getElementById("dataArea").innerHTML = html;
+        })
+        .catch(() => {
+            document.getElementById("dataArea").innerText =
+                "Unable to fetch savings data.";
+        });
+}
 
     /* Initial Load */
     fetchBudget();

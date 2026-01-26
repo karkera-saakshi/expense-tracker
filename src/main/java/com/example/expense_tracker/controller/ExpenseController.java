@@ -59,7 +59,7 @@ public class ExpenseController {
             obj.setCategory(expenseDto.getCategory());
             obj.setDescription(expenseDto.getDescription());
             obj.setMood(expenseDto.getMood());
-
+            obj.setUser(budget.getUser());
             obj.setBudget(budget);
             expenseRepo.save(obj);
 
