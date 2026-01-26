@@ -6,6 +6,7 @@ Expense Tracker is a web application built using HTML, CSS, JavaScript, and a Ja
 - Add, edit, and delete expenses
 - Track monthly budgets
 - Track total expense per month
+- Track total savings per month
 - Categorize expenses (Food, Travel, Entertainment, Self, etc.)
 - Mood-based tracking (for future advancements in ML)
 
